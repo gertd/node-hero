@@ -2,9 +2,9 @@ const express = require('express');
 const hbs = require('hbs');
 const fs = require('fs');
 const port = process.env.PORT || 3000;
+const inMaintenance = process.env.OOS || 0;
 
 var app = express();
-var inMaintenance = true;
 
 hbs.registerPartials(__dirname + '/views/partials');
 
@@ -23,7 +23,7 @@ app.use((req, res, next) => {
 });
 
 app.use((req, res, next) => {
-  if (inMaintenance) {
+  if (inMaintenance === 1) {
     res.render('maintenance.hbs');
   } else {
     next();
